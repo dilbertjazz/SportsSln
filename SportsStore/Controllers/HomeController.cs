@@ -7,7 +7,7 @@ namespace SportsStore.Controllers
 {
     public class HomeController : Controller
     {
-        private IStoreRepository repository;
+        private readonly IStoreRepository repository;
         public int PageSize = 4;
 
         public HomeController(IStoreRepository repo)
@@ -26,7 +26,7 @@ namespace SportsStore.Controllers
             {
                 CurrentPage = productPage,
                 ItemsPerPage = PageSize,
-                TotalItems = repository.Products.Count()
+                TotalItems = category == null ? repository.Products.Count() : repository.Products.Where(e => e.Category == category).Count()
             }
         });
     }
